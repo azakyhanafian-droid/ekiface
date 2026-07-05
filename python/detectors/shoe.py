@@ -22,9 +22,9 @@ os.makedirs(SAVE_DIR, exist_ok=True)
 
 DB_CONFIG = {
     "dbname": "neoguard",
-    "user": "zaky",
-    "password": "zaky12345",
-    "host": "localhost",
+    "user": "postgres",
+    "password": "",
+    "host": "192.168.0.120",
     "port": "5432"
 }
 
@@ -42,8 +42,11 @@ print(f"[INFO] YOLO Shoes Classes: {model.names}")
 # =====================================================
 # INSTANSIASI KAMERA & BUFFER CONTROLLER
 # =====================================================
-CAMERA_INDEX = 1
-cap = cv2.VideoCapture(CAMERA_INDEX, cv2.CAP_DSHOW)
+# 1. Ubah index ke 0 sesuai dengan /dev/video0 yang aktif
+CAMERA_INDEX = 0  
+
+# 2. Hapus cv2.CAP_DSHOW, atau ganti dengan cv2.CAP_V4L2 (API standar Linux)
+cap = cv2.VideoCapture(CAMERA_INDEX, cv2.CAP_V4L2)
 
 if not cap.isOpened():
     print(f"[ERROR] Gagal membuka kamera USB dengan index {CAMERA_INDEX}")

@@ -23,16 +23,16 @@ os.makedirs(SAVE_DIR, exist_ok=True)
 
 DB_CONFIG = {
     "dbname": "neoguard",
-    "user": "zaky",
-    "password": "zaky12345",
-    "host": "localhost",
+    "user": "postgres",
+    "password": "",
+    "host": "192.168.0.120",
     "port": "5432"
 }
 
 # ==========================================
 # KONFIGURASI KAMERA
 # ==========================================
-CAMERA_INDEXES = [2, 3]
+CAMERA_INDEXES = [0, 1, 2]
 CAMERA_LABELS  = ["CAM-1", "CAM-2", "CAM-3"]
 
 GRID_ROWS = 1
@@ -292,8 +292,8 @@ for idx, lbl in zip(CAMERA_INDEXES, CAMERA_LABELS):
 
 if __name__ == '__main__':
     try:
-        print("\n[INFO] Menjalankan Server Stream Web pada http://localhost:5000")
-        flask_app.run(host='0.0.0.0', port=5000, threaded=True, debug=False)
+        print("\n[INFO] Menjalankan Server Stream Web pada http://localhost:5002")
+        flask_app.run(host='0.0.0.0', port=5002, threaded=True, debug=False)
     finally:
         for cam in cameras:
             cam.stop()
