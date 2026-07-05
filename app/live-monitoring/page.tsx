@@ -72,7 +72,7 @@ export default function LiveMonitoringPage() {
       <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
         
         {/* Sisi Kiri: Grid Kamera Stream MJPEG dari Flask Python */}
-        <div className="xl:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-4 auto-rows-max">
+        <div className="xl:col-span-3 grid grid-cols-1 md:grid-cols-2 gap-4 auto-rows-max">
           {mockCameras.map((camera) => {
             const isCamOffline = streamErrors[camera.id] || camera.status !== 'online';
             
@@ -82,7 +82,7 @@ export default function LiveMonitoringPage() {
             // Jika CAM004, arahkan ke endpoint utama '/video_feed' milik shoe.py
             const streamUrl = isCamera4 
             ? `http://localhost:5001/video_feed?cache=${retryKey}` 
-            : `http://localhost:5000/video_feed_${camera.id}?cache=${retryKey}`;
+            : `http://localhost:5002/video_feed_${camera.id}?cache=${retryKey}`;
 
             return (
               <Card key={camera.id} className="border border-border/60 shadow-sm overflow-hidden flex flex-col justify-between">
@@ -140,28 +140,6 @@ export default function LiveMonitoringPage() {
                     </div>
                   )}
 
-                  {/* Overlay Kontrol Menu */}
-                  <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-3 z-20">
-                    <Button size="icon" variant="ghost" className="bg-white/10 hover:bg-white/20 text-white rounded-full">
-                      <Play className="w-5 h-5 fill-white" />
-                    </Button>
-                    <Button size="icon" variant="ghost" className="bg-white/10 hover:bg-white/20 text-white rounded-full">
-                      <Maximize2 className="w-5 h-5" />
-                    </Button>
-                  </div>
-
-                  {/* Tombol Aksi Snapshot */}
-                  <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/90 to-transparent p-3 opacity-0 group-hover:opacity-100 transition-opacity z-20">
-                    <div className="flex gap-2">
-                      <Button size="sm" variant="secondary" className="flex-1 text-xs h-8 bg-zinc-900 text-zinc-200 hover:bg-zinc-800">
-                        <Download className="w-3.5 h-3.5 mr-1.5" /> Snapshot
-                      </Button>
-                      <Button size="sm" variant="secondary" className="flex-1 text-xs h-8 bg-zinc-900 text-zinc-200 hover:bg-zinc-800">
-                        <Maximize2 className="w-3.5 h-3.5 mr-1.5" /> Fullscreen
-                      </Button>
-                    </div>
-                  </div>
-
                 </div>
 
                 {/* Deskripsi Informasi Kamera */}
@@ -182,67 +160,6 @@ export default function LiveMonitoringPage() {
         </div>
 
         {/* Sisi Kanan: Panel Feed Pelanggaran Sepatu Safety */}
-        <div className="xl:col-span-1">
-          <Card className="h-full border border-border/60 shadow-sm flex flex-col">
-            <CardHeader className="border-b bg-muted/40 p-4">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                  <ShieldAlert className="w-5 h-5 text-rose-500" />
-                  <CardTitle className="text-base font-bold">Shoe Violations Feed</CardTitle>
-                </div>
-                <Badge variant="destructive" className="animate-pulse bg-rose-600">Real-time</Badge>
-              </div>
-            </CardHeader>
-            
-            <CardContent className="p-4 overflow-y-auto flex-1 space-y-4 max-h-[580px] min-h-[400px]">
-              {violations.length === 0 ? (
-                <div className="flex flex-col items-center justify-center h-full min-h-[300px] text-center text-muted-foreground space-y-2">
-                  <Circle className="w-8 h-8 text-muted-foreground/30 stroke-1" />
-                  <p className="text-sm">Belum ada deteksi pelanggaran sepatu safety.</p>
-                </div>
-              ) : (
-                violations.map((v) => (
-                  <div 
-                    key={v.id} 
-                    className="flex gap-3 p-3 rounded-lg border border-rose-100 bg-rose-50/30 hover:bg-rose-50 transition-colors"
-                  >
-                    {/* Bukti Capture Pelanggaran */}
-                    <div className="relative w-20 h-20 bg-zinc-900 rounded-md overflow-hidden flex-shrink-0 border border-rose-200">
-                      <Image
-                        src={v.image_path}
-                        alt={`Pelanggaran ${v.nama}`}
-                        fill
-                        className="object-cover"
-                        unoptimized
-                      />
-                    </div>
-                    
-                    {/* Deskripsi Data Pelanggaran */}
-                    <div className="flex flex-col justify-between py-0.5 min-w-0 flex-1">
-                      <div>
-                        <div className="flex items-center justify-between gap-2">
-                          <span className="font-bold text-sm truncate text-rose-950">{v.nama}</span>
-                          <span className="text-[10px] font-semibold bg-rose-100 text-rose-700 px-2 py-0.5 rounded-full flex-shrink-0">
-                            {v.camera_name || 'CAM-4'}
-                          </span>
-                        </div>
-                        <p className="text-xs text-rose-600 mt-0.5 font-medium">
-                          {v.violation_status || 'NO SAFETY SHOES'}
-                        </p>
-                      </div>
-                      
-                      <div className="flex items-center justify-between text-[11px] text-muted-foreground border-t border-rose-100/50 pt-1 mt-1">
-                        <span>Akurasi: <strong className="text-rose-600">{parseFloat(v.confidence.toString()).toFixed(1)}%</strong></span>
-                        <span>{new Date(v.created_at).toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit', second: '2-digit' })}</span>
-                      </div>
-                    </div>
-
-                  </div>
-                ))
-              )}
-            </CardContent>
-          </Card>
-        </div>
 
       </div>
     </div>

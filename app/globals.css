@@ -190,3 +190,83 @@
     @apply font-sans;
   }
 }
+
+/* Custom CSS Print Overrides */
+@media print {
+  /* Hide Radix/Shadcn dialog close buttons, overlays, and general control items */
+  button[class*="absolute"], 
+  [data-state="open"] button[class*="absolute"],
+  div[data-state="open"][class*="fixed"], /* Dialog backdrop overlay */
+  .DialogOverlay,
+  .DialogClose,
+  [data-radix-focus-guard],
+  /* Hide any potential sticky main navigation or widgets */
+  aside,
+  header,
+  .no-print {
+    display: none !important;
+  }
+
+  /* Reset main scroll and size defaults for printing */
+  html, 
+  body, 
+  main,
+  div.flex,
+  div.flex-col,
+  div.flex-1 {
+    background: white !important;
+    color: black !important;
+    height: auto !important;
+    min-height: 0 !important;
+    overflow: visible !important;
+    position: static !important;
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  /* Reset dialog print wrapper position */
+  div[role="dialog"] {
+    position: relative !important;
+    top: 0 !important;
+    left: 0 !important;
+    transform: none !important;
+    border: none !important;
+    box-shadow: none !important;
+    max-width: 100% !important;
+    width: 100% !important;
+    padding: 20px !important;
+    margin: 0 !important;
+    background: white !important;
+    color: black !important;
+    display: block !important;
+  }
+
+  /* If a dialog is open, hide the main app layout entirely */
+  body:has([role="dialog"]) div.flex.h-screen {
+    display: none !important;
+  }
+
+  /* High contrast colors and styling for printing */
+  .text-muted-foreground {
+    color: #475569 !important;
+  }
+  
+  .border,
+  .border-border\/60 {
+    border: 1px solid #94a3b8 !important;
+  }
+
+  /* Avoid cutting off text inside timeline cards and badges */
+  .break-inside-avoid,
+  .page-break-inside-avoid {
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+  }
+
+  /* Adjust margins of printed page */
+  @page {
+    size: auto;
+    margin: 15mm 20mm 15mm 20mm;
+  }
+}

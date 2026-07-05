@@ -1,5 +1,4 @@
-import { EventToolbar } from '@/components/event-log/event-toolbar';
-import { TimelineCards } from '@/components/event-log/timeline-cards';
+import { EventLogContainer } from '@/components/event-log/event-log-container';
 
 export const metadata = {
   title: 'Event Log - NeoGuard',
@@ -8,18 +7,15 @@ export const metadata = {
 
 export default function EventLogPage() {
   return (
-    <div className="p-6 space-y-6 bg-background">
+    <div className="p-6 space-y-6 bg-background animate-fade-in">
       {/* Page Title */}
       <div>
         <h1 className="text-3xl font-bold text-foreground">Event Log</h1>
         <p className="text-muted-foreground mt-1">AI detection results and safety violations</p>
       </div>
 
-      {/* Toolbar */}
-      <EventToolbar />
-
-      {/* Timeline Cards */}
-      <TimelineCards />
+      {/* Main Container */}
+      <EventLogContainer />
     </div>
   );
 }

@@ -3,10 +3,10 @@ import { Pool, PoolClient, QueryResult } from 'pg';
 
 // 1. Konfigurasi Database disesuaikan dengan DB_CONFIG di Python & Skema PostgreSQL Anda
 const dbConfig = {
-  user: 'zaky',
-  host: 'localhost',
+  user: 'postgres',
+  host: '192.168.0.120',
   database: 'neoguard',
-  password: 'zaky12345',
+  password: '',
   port: 5432,
   max: 10, // Jumlah maksimal koneksi simultan dalam pool
   idleTimeoutMillis: 30000, // Menutup koneksi yang idle setelah 30 detik

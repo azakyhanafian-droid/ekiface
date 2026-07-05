@@ -83,15 +83,9 @@ export default function DashboardPage() {
 
       {/* Grid Utama Layout Pemantauan */}
       <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
-        
-        {/* 2. Pratinjau Live Stream Kamera (CAM 1-3 Welding Area, CAM 4 Attendance) */}
-        <div className="xl:col-span-2 space-y-4">
-          <h2 className="text-lg font-semibold text-foreground tracking-tight">Live Cameras</h2>
-          <LiveCameraPreview />
-        </div>
 
         {/* 3. Panel Gauge Monitoring Asap & Gas Lingkungan Pabrik */}
-        <div className="xl:col-span-1 space-y-4">
+        <div className="xl:col-span-4 space-y-4">
           <h2 className="text-lg font-semibold text-foreground tracking-tight">Environmental Monitoring</h2>
           <SmokeSensorGauge logs={gasLogs} isLoading={loading} />
         </div>
